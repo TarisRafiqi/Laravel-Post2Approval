@@ -87,10 +87,10 @@
             type: 'doughnut',
             data: {
                 labels: [
-                    'Approved',
                     'All Posts',
-                    'Need Revision',
-                    'Rejected'
+                    'Approver 2 Approved',
+                    'Approver 2 Need Revision',
+                    'Approver 2 Rejected'
                 ],
                 datasets: [{
                     label: 'My First Dataset',

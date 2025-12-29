@@ -14,6 +14,7 @@ use App\Http\Controllers\approver\PostController as ApproverPostController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\RegisterController;
 use App\Http\Controllers\users\MyProfileController;
+use Illuminate\Http\Request;
 
 // Home Page
 Route::get('/', function () {
@@ -22,14 +23,11 @@ Route::get('/', function () {
 // Login Page
 Route::get('/login', [AuthController::class, 'showLoginForm']);
 Route::post('/login', [AuthController::class, 'login'])->middleware('throttle:10,1');
-// Log out
-Route::post('/logout', function () {
-    Auth::logout();
-    return redirect('/');
-})->name('logout');
+Route::post('/logout', [AuthController::class, 'logout'])->name('logout');;
+
 // Register Page
 Route::get('/register', [RegisterController::class, 'showRegisterForm']);
-Route::post('/register', [RegisterController::class, 'registerUser'])->middleware('throttle:3,60');;
+Route::post('/register', [RegisterController::class, 'registerUser']);
 
 
 
