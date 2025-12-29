@@ -24,6 +24,46 @@ class PostsTableController extends Controller
         return view('admin.posts', ['posts' => $posts]);
     }
 
+    public function view_df() 
+    {
+        // $posts = Post::all();
+        $posts = Post::with(['approver1', 'approver2'])->get();
+
+        // Map status values to their respective labels
+        $posts = $posts->map(function ($post) {
+            $post->status_1 = $this->mapStatus($post->status_1);
+            $post->status_2 = $this->mapStatus($post->status_2);
+            return $post;
+        });
+
+        $html = view('admin.posts_pdf', ['posts' => $posts])->render();
+
+        $mpdf = new \Mpdf\Mpdf();
+        $mpdf->WriteHTML($html);
+        $mpdf->Output();
+
+    }
+
+     public function download_df() 
+    {
+        // $posts = Post::all();
+        $posts = Post::with(['approver1', 'approver2'])->get();
+
+        // Map status values to their respective labels
+        $posts = $posts->map(function ($post) {
+            $post->status_1 = $this->mapStatus($post->status_1);
+            $post->status_2 = $this->mapStatus($post->status_2);
+            return $post;
+        });
+
+        $html = view('admin.posts_pdf', ['posts' => $posts])->render();
+
+        $mpdf = new \Mpdf\Mpdf();
+        $mpdf->WriteHTML($html);
+        $mpdf->Output('Post-Queue-List.pdf','D');
+
+    }
+
     // Helper function to map status codes to their labels
     private function mapStatus($status)
     {

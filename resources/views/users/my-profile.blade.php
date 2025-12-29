@@ -17,7 +17,7 @@
                 </div>
                 <div class="column">
                     <div class="control">
-                        <input class="input" id="username" name="username" disabled>
+                        <input class="input" id="username" name="username" value="{{ $user->username }}" disabled>
                     </div>
                 </div>
             </div>
@@ -28,7 +28,7 @@
                 </div>
                 <div class="column">
                     <div class="control">
-                        <input class="input" id="name" name="name" required>
+                        <input class="input" id="name" name="name" value="{{ $user->name }}" required>
                     </div>
                 </div>
             </div>
@@ -39,7 +39,7 @@
                 </div>
                 <div class="column">
                     <div class="control">
-                        <input class="input" id="role" name="role" disabled>
+                        <input class="input" id="role" name="role" value="{{ $user->role }}" disabled>
                     </div>
                 </div>
             </div>
@@ -50,7 +50,8 @@
                 </div>
                 <div class="column">
                     <div class="control">
-                        <input class="input" id="accountStatus" name="accountStatus" disabled>
+                        <input class="input" id="accountStatus" name="accountStatus"
+                            value="{{ $user->active == 1 ? 'Active' : 'Not Active' }}" disabled>
                     </div>
                 </div>
             </div>

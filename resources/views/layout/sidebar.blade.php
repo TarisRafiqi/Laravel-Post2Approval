@@ -4,6 +4,8 @@
         <ul class="menu-list">
             @auth
                 @if (auth()->user()->role === 'admin')
+                    <li><a href="/admin/dashboard"><span class="icon"><i class="fas fa-chart-line"></i></i></span>
+                            <span class="text">Dashboard</span></a></li>
                     <li><a href="/admin/posts"><span class="icon"><i class="fas fa-list"></i></span>
                             <span class="text">Post Queue</span></a></li>
                     <li><a href="/admin/users"><span class="icon"><i class="fas fa-users-cog"></i></span>

@@ -5,6 +5,7 @@ namespace App\Http\Controllers\approver;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Post;
+use Illuminate\Support\Facades\Auth;
 
 class PostsTableController extends Controller
 {
@@ -12,7 +13,10 @@ class PostsTableController extends Controller
     public function index()
     {
         // $posts = Post::all();
-        $posts = Post::with(['approver1', 'approver2'])->get();
+        // $posts = Post::with(['approver1', 'approver2'])->get();
+        $posts = Post::with(['approver1', 'approver2'])
+        ->where('uid_approve_1', Auth::id())
+        ->get();
 
         // Map status values to their respective labels
         $posts = $posts->map(function ($post) {

@@ -8,6 +8,8 @@
         <h2 class="title is-2">Posts Queue List</h2>
         <hr>
 
+        <a href="/admin/download/pdf" class="button is-warning">Download PDF</a>
+        <a href="/admin/view/pdf" class="button is-link" target="_blank">View PDF</a>
         <table class="table is-striped is-narrow is-hoverable is-fullwidth">
             <thead>
                 <tr>

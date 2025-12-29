@@ -21,7 +21,11 @@ class AuthController extends Controller
         ]);
 
         // Check credentials using Auth attempt
-        $credentials = ['username' => $request->username, 'password' => $request->password, 'active' => 1];
+        $credentials = [
+            'username' => $request->username, 
+            'password' => $request->password, 
+            'active' => 1
+        ];
 
         if (Auth::attempt($credentials)) {
             $user = Auth::user();

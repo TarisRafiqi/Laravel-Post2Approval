@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\admin\DashboardController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\users\PostsTableController as UsersPostsTableController;
@@ -12,6 +13,7 @@ use App\Http\Controllers\approver\PostsTableController as ApproverPostsTableCont
 use App\Http\Controllers\approver\PostController as ApproverPostController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\RegisterController;
+use App\Http\Controllers\users\MyProfileController;
 
 // Home Page
 Route::get('/', function () {
@@ -19,7 +21,7 @@ Route::get('/', function () {
 });
 // Login Page
 Route::get('/login', [AuthController::class, 'showLoginForm']);
-Route::post('/login', [AuthController::class, 'login']);
+Route::post('/login', [AuthController::class, 'login'])->middleware('throttle:10,1');
 // Log out
 Route::post('/logout', function () {
     Auth::logout();
@@ -27,14 +29,17 @@ Route::post('/logout', function () {
 })->name('logout');
 // Register Page
 Route::get('/register', [RegisterController::class, 'showRegisterForm']);
-Route::post('/register', [RegisterController::class, 'registerUser']);
+Route::post('/register', [RegisterController::class, 'registerUser'])->middleware('throttle:3,60');;
 
 
 
 // Role Admin
 Route::middleware(['role:admin'])->group(function () {
     // Posts Page
-    Route::get('/admin/posts', [AdminPostsTableController::class, 'index'])->middleware('role:admin');;
+    Route::get('/admin/dashboard', [DashboardController::class, 'index']);
+    Route::get('/admin/posts', [AdminPostsTableController::class, 'index']);
+    Route::get('/admin/view/pdf', [AdminPostsTableController::class, 'view_df']);
+    Route::get('/admin/download/pdf', [AdminPostsTableController::class, 'download_df']);
     Route::delete('/admin/posts/{id}', [AdminPostsTableController::class, 'destroy']);
 
     // Users Tabel Page
@@ -49,8 +54,6 @@ Route::middleware(['role:admin'])->group(function () {
     Route::get('/admin/post/{slug}', [AdminPostController::class, 'showPost'])->name('admin.post.show');
     Route::put('/admin/post/{slug}', [AdminPostController::class, 'updatePost'])->name('admin.post.update');
 });
-
-
 
 // Role Approver
 Route::middleware(['role:approver'])->group(function () {
@@ -69,9 +72,6 @@ Route::middleware(['role:approver'])->group(function () {
     });
 });
 
-
-
-
 // Role User
 Route::middleware(['role:user'])->group(function () {
     // Posts Page
@@ -88,7 +88,5 @@ Route::middleware(['role:user'])->group(function () {
     Route::get('/users/posts/{post:slug}', [UsersPostController::class, 'showPost']);
 
     // My Profile
-    Route::get('/users/my-profile', function () {
-        return view('users.my-profile');
-    });
+    Route::get('/users/my-profile', [MyProfileController::class, 'index']);
 });
