@@ -19,6 +19,15 @@
                     <input class="input" type="password" name="password" placeholder="Password" required>
                 </div>
 
+                <div class="field is-flex is-justify-content-center">
+                    <div class="g-recaptcha" data-sitekey="{{ env('GOOGLE_RECAPTCHA_KEY') }}"></div>
+                </div>
+                {{-- @if ($errors->has('g-recaptcha-response'))
+                    <p style="color: red;" class="has-text-centered mb-2">
+                        {{ $errors->first('g-recaptcha-response') }}
+                    </p>
+                @endif --}}
+
                 <!-- If Login Failed -->
                 @if ($errors->any())
                     <p style="color: red;" class="has-text-centered mb-2">
@@ -45,6 +54,6 @@
 
     .box {
         width: 100%;
-        max-width: 270px;
+        max-width: 350px;
     }
 </style>

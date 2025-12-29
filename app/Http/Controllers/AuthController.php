@@ -4,12 +4,12 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use App\Rules\ReCaptcha;
 
 class AuthController extends Controller
 {
     public function showLoginForm()
     {
-        
         return view('login');
     }
 
@@ -27,6 +27,7 @@ class AuthController extends Controller
         $request->validate([
             'username' => 'required',
             'password' => 'required',
+            'g-recaptcha-response' => [new ReCaptcha()],
         ]);
 
         // Check credentials using Auth attempt
